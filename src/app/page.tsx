@@ -1,4 +1,4 @@
-import { FaLock, FaDoorClosed, FaUser, Fa500Px } from "react-icons/fa";
+import { FaLock, FaDoorClosed, FaUser } from "react-icons/fa";
 
 export default function Login() {
   const bg = "https://i.imgur.com/qlXKnfB.png";
