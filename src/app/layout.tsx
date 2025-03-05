@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { sfPro } from "../fonts";
 
 export const metadata: Metadata = {
   title: "open | Effortless Access",
@@ -12,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={sfPro.variable}>
       <body>{children}</body>
     </html>
   );

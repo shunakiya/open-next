@@ -25,9 +25,7 @@ export default function Login() {
               </button>
             </div>
 
-            <header className="text-2xl font-semibold text-center mb-1">
-              open
-            </header>
+            <header className="text-2xl text-center mb-1">open</header>
 
             <p className="text-gray-500 text-center w-64  mx-auto text-sm">
               Effortless access, and unlock your world with a tap or touch.
