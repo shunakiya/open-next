@@ -28,7 +28,8 @@ export default function Login() {
             <header className="text-2xl text-center mb-1">open</header>
 
             <p className="text-gray-500 text-center w-64  mx-auto text-sm">
-              Effortless access, and unlock your world with a tap or touch.
+              Experience effortless access, and unlock your world with a tap or
+              touch.
             </p>
           </div>
 
