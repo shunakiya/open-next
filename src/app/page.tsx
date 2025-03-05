@@ -1,69 +1,64 @@
-import { FaLock, FaDoorClosed, FaUser } from "react-icons/fa";
+import Image from "next/image";
 
 export default function Login() {
-  const bg = "https://i.imgur.com/qlXKnfB.png";
-
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover overflow-hidden"
-        style={{
-          backgroundImage: `url(${bg})`,
-          filter: "blur(2px)",
-          transform: "scale(1.1)",
-        }}
-      />
+    <div className="relative z-10 flex items-center justify-center min-h-screen">
+      <div className="flex py-3.5 px-3.5 shadow-2xl bg-blue-950 rounded-xl text-left gap-6">
+        <div>
+          <Image
+            src="/assets/images/bg-3.jpg"
+            alt=""
+            className="rounded-lg h-full w-full"
+            width="380"
+            height="0"
+          />
+        </div>
 
-      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
-        <div className="bg-white/50 backdrop-blur-md p-7 rounded-3xl shadow-2xl drop-shadow-xl w-96">
-          <div className="mb-5">
-            <div className="flex justify-center mb-4">
-              <button>
-                <div className="rounded-lg shadow-2xl drop-shadow-xl border-transparent w-min p-3 bg-slate-200  transition-opacity duration-125 ease-in-out hover:opacity-85 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                  <FaDoorClosed size={30} />
-                </div>
-              </button>
+        <div className="flex flex-col gap-9 w-[400px] px-5 py-10">
+          <div className="">
+            <div className="flex flex-col gap-4">
+              <h1 className="text-4xl font-medium tracking-tight">
+                Create an account
+              </h1>
+              <p className="text-sm text-slate-400 font-light">
+                Already have an account?{" "}
+                <a className="underline cursor-pointer text-[#7591FF]">
+                  Log in
+                </a>
+              </p>
             </div>
-
-            <header className="text-2xl text-center mb-1">open</header>
-
-            <p className="text-gray-500 text-center w-64  mx-auto text-sm">
-              Experience effortless access, and unlock your world with a tap or
-              touch.
-            </p>
           </div>
 
-          <div className="flex flex-col w-full gap-y-2">
-            <div className="relative items-center">
-              <FaUser
-                className="absolute left-[9.5px] top-1/2 transform -translate-y-1/2 text-gray-500"
-                size={19}
+          <form className="flex flex-col gap-4">
+            <div className="flex justify-between">
+              <input
+                type="text"
+                placeholder="First Name"
+                className="border-none bg-[#353C5A] py-3 px-4 rounded-lg w-[173px] font-light text-sm text-gray-50/60 transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
               />
               <input
                 type="text"
-                placeholder="Username"
-                className="w-full pl-9 pr-3 py-2 bg-[#EFF2F6] text-sm placeholder-gray-500 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                placeholder="Last Name"
+                className="border-none bg-[#353C5A] py-3 px-4 rounded-lg w-[173px] font-light text-sm text-gray-50/60 transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
               />
             </div>
 
-            <div className="relative items-center">
-              <FaLock
-                className="absolute left-[10px] top-1/2 transform -translate-y-1/2 text-gray-500"
-                size={18}
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                className="w-full pl-9 pr-3 py-2 bg-[#EFF2F6] text-sm placeholder-gray-500 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              />
-            </div>
-          </div>
+            <input
+              type="email"
+              placeholder="Email"
+              className="border-none bg-[#353C5A] py-3 px-4 rounded-lg font-light text-sm text-gray-50/60 transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
+            />
 
-          <div className="justify-center items-center text-center mt-4">
-            <button className="w-full bg-blue-600 text-white font-semibold rounded-lg py-2 transition-opacity duration-125 ease-in-out hover:opacity-85 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-              Login
-            </button>
-          </div>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              className="border-none bg-[#353C5A] py-3 px-4 rounded-lg font-light text-sm text-gray-50/60 transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
+            />
+
+            <div className="w-full items-center bg-[#5D7BE8] text-center py-3 rounded-lg mt-4 transition-all duration-200 ease-in-out hover:bg-[#7591FF] ">
+              <button className="text-sm">Create account</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

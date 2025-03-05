@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  color: #242424;
-  background-color: rgba(255, 255, 255, 0.9);
+  color: #e0e6ff;
+  background-color: #4d5c7c;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -11,9 +11,9 @@
 }
 
 @theme {
-  --font-sf: "SF Pro", sans-serif;
+  --font-helvetica: "Helvetica", sans-serif;
 }
 
 body {
-  font-family: var(--font-sf);
+  font-family: var(--font-helvetica);
 }
