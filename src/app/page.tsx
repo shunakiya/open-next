@@ -60,7 +60,7 @@ export default function Login() {
                 className="border-none w-full bg-[#353C5A] py-2.5 px-4 rounded-lg  font-light text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
               />
               {state?.error?.username && (
-                <p className="text-left text-xs text-red-700 mt-1.5">
+                <p className="text-left text-xs text-red-700 mt-1.5 ml-1">
                   {state.error.username}
                 </p>
               )}
@@ -76,7 +76,7 @@ export default function Login() {
               />
 
               {state?.error?.email && (
-                <p className="text-left text-xs text-red-700 mt-1.5">
+                <p className="text-left text-xs text-red-700 mt-1.5 ml-1">
                   {state.error.email}
                 </p>
               )}
@@ -91,7 +91,7 @@ export default function Login() {
               />
 
               {state?.error?.password && (
-                <div className="text-left text-xs text-red-700 mt-1.5">
+                <div className="text-left text-xs text-red-700 mt-1.5 ml-1">
                   <p>Password must:</p>
                   <ul className="list-disc list-inside ml-1">
                     {state.error.password.map((err) => (
