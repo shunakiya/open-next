@@ -1,11 +1,20 @@
 "use server";
 
-export async function register(state: any, formData: any) {
-  const username = formData.get("username");
-  const email = formData.get("email");
-  const password = formData.get("password");
+import { RegisterFormSchema } from "@/utils/rules";
 
-  console.log(username);
-  console.log(email);
-  console.log(password);
+export async function register(state: any, formData: any) {
+  const validatredFields = RegisterFormSchema.safeParse({
+    username: formData.get("username"),
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+
+  if (!validatredFields.success) {
+    const errorsObject = validatredFields.error.flatten().fieldErrors;
+
+    return {
+      error: errorsObject,
+      email: formData.get("email"),
+    };
+  }
 }

@@ -51,34 +51,64 @@ export default function Login() {
             action={action}
             className="flex flex-col gap-4 text-gray-50/60 "
           >
-            <input
-              type="text"
-              required
-              placeholder="Username"
-              autoComplete="true"
-              name="username"
-              className="border-none bg-[#353C5A] py-2.5 px-4 rounded-lg  font-light text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
-            />
+            <div>
+              <input
+                type="text"
+                placeholder="Username"
+                autoComplete="true"
+                name="username"
+                className="border-none w-full bg-[#353C5A] py-2.5 px-4 rounded-lg  font-light text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
+              />
+              {state?.error?.username && (
+                <p className="text-left text-xs text-red-700 mt-1.5">
+                  {state.error.username}
+                </p>
+              )}
+            </div>
 
-            <input
-              type="email"
-              required
-              placeholder="Email"
-              name="email"
-              className="border-none bg-[#353C5A] py-3 px-4 rounded-lg font-light text-sm text-gray-50/60 transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
-            />
+            <div>
+              <input
+                type="email"
+                placeholder="Email"
+                name="email"
+                defaultValue={state?.email}
+                className="w-full border-none bg-[#353C5A] py-3 px-4 rounded-lg font-light text-sm text-gray-50/60 transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
+              />
 
-            <input
-              type="password"
-              required
-              placeholder="Enter your password"
-              name="password"
-              className="border-none bg-[#353C5A] py-3 px-4 rounded-lg font-light text-sm text-gray-50/60 transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
-            />
+              {state?.error?.email && (
+                <p className="text-left text-xs text-red-700 mt-1.5">
+                  {state.error.email}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <input
+                type="password"
+                placeholder="Enter your password"
+                name="password"
+                className="w-full border-none bg-[#353C5A] py-3 px-4 rounded-lg font-light text-sm text-gray-50/60 transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
+              />
+
+              {state?.error?.password && (
+                <div className="text-left text-xs text-red-700 mt-1.5">
+                  <p>Password must:</p>
+                  <ul className="list-disc list-inside ml-1">
+                    {state.error.password.map((err) => (
+                      <li key={err}>{err}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
 
             <div className="w-full items-center bg-[#5D7BE8] text-center py-3 rounded-lg mt-4 transition-all duration-200 ease-in-out hover:bg-[#7591FF] ">
               {/*  add buttons properties for when it gets disabled */}
-              <button disabled={isPending} type="submit" className="text-sm">
+              <button
+                disabled={isPending}
+                type="submit"
+                className="text-sm text-[#e0e6ff]"
+              >
                 {isPending ? "Loading..." : "Create account"}
               </button>
             </div>
