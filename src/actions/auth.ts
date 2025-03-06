@@ -50,6 +50,7 @@ export async function register(state: any, formData: any) {
     email,
     password: hashedPassword,
   });
+  console.log(results);
 
   // create a session
 
