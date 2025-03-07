@@ -67,7 +67,7 @@ export async function register(
   console.log(results);
 
   // create a session
-  await createSession(results.insertedId);
+  await createSession(results.insertedId.toString());
 
   // redirect to login page
   redirect("/dashboard");

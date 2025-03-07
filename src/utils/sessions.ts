@@ -1,9 +1,9 @@
+import "server-only";
 import { jwtVerify, SignJWT } from "jose";
-import { ObjectId } from "mongodb";
 import { cookies } from "next/headers";
 
 type Payload = {
-  userId: ObjectId;
+  userId: string;
   [key: string]: any;
 };
 
@@ -35,7 +35,7 @@ export async function decrypt(session: Session): Promise<Payload | undefined> {
 }
 
 // session for cookie creation upon successful login
-export async function createSession(userId: ObjectId): Promise<void> {
+export async function createSession(userId: string): Promise<void> {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   const session = await encrypt({ userId });
 
