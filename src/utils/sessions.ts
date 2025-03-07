@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 
 type Payload = {
   userId: string;
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
 type Session = string;
@@ -29,7 +29,7 @@ export async function decrypt(session: Session): Promise<Payload | undefined> {
     });
     return payload as Payload;
   } catch (error) {
-    console.log("Failed to verify session.");
+    console.log("Failed to verify session:", error);
     return undefined;
   }
 }
