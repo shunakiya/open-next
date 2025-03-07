@@ -1,11 +1,22 @@
 "use server";
-
 import bcrypt from "bcrypt";
 import { getCollection } from "../utils/db";
 import { RegisterFormSchema } from "../utils/rules";
 import { redirect } from "next/navigation";
 
-export async function register(state: any, formData: any) {
+interface RegisterState {
+  error?: {
+    username?: string[] | undefined;
+    email?: string[] | undefined;
+    password?: string[] | undefined;
+  };
+  email?: string;
+}
+
+export async function register(
+  state: RegisterState | undefined,
+  formData: FormData
+): Promise<RegisterState | undefined> {
   // validate form fields
   const validatedFields = RegisterFormSchema.safeParse({
     username: formData.get("username"),
@@ -13,13 +24,14 @@ export async function register(state: any, formData: any) {
     password: formData.get("password"),
   });
 
+  console.log(state);
+
   // if any form fields are invalid
   if (!validatedFields.success) {
     const errorsObject = validatedFields.error.flatten().fieldErrors;
-
     return {
       error: errorsObject,
-      email: formData.get("email"),
+      email: formData.get("email") as string,
     };
   }
 
@@ -30,14 +42,14 @@ export async function register(state: any, formData: any) {
   const userCollection = await getCollection("users");
   if (!userCollection) {
     return {
-      error: { username: "Server error." },
+      error: { username: ["Server error."] },
     };
   }
 
   const existingUser = await userCollection.findOne({ username });
   if (existingUser) {
     return {
-      error: { username: "Username already exists." },
+      error: { username: ["Username already exists."] },
     };
   }
 
@@ -50,6 +62,7 @@ export async function register(state: any, formData: any) {
     email,
     password: hashedPassword,
   });
+
   console.log(results);
 
   // create a session

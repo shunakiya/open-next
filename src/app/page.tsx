@@ -4,8 +4,22 @@ import { IoOpenOutline } from "react-icons/io5";
 import { useActionState } from "react";
 import { register } from "../actions/auth";
 
+interface RegisterFormErrors {
+  username?: string[];
+  email?: string[];
+  password?: string[];
+}
+
+interface RegisterState {
+  error?: RegisterFormErrors;
+  email?: string;
+}
+
 export default function Login() {
-  const [state, action, isPending] = useActionState(register, undefined);
+  const [state, action, isPending] = useActionState<
+    RegisterState | undefined,
+    FormData
+  >(register, undefined);
   return (
     <div className="relative z-10 flex items-center justify-center min-h-screen">
       <div className="flex py-3.5 px-3.5 shadow-2xl bg-blue-950 rounded-xl text-left gap-6 items-center">
