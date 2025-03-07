@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { getCollection } from "../utils/db";
 import { RegisterFormSchema } from "../utils/rules";
 import { redirect } from "next/navigation";
+import { createSession } from "../utils/sessions";
 
 interface RegisterState {
   error?: {
@@ -66,7 +67,8 @@ export async function register(
   console.log(results);
 
   // create a session
+  await createSession(results.insertedId);
 
   // redirect to login page
-  redirect("/home");
+  redirect("/dashboard");
 }
