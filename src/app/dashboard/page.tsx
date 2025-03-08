@@ -1,11 +1,18 @@
-"use client";
+import getUserAuth from "@/utils/getUserAuth";
+import { redirect } from "next/navigation";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const authUser = await getUserAuth();
+
   return (
     <div>
-      <div>
-        <h1>home</h1>
-      </div>
+      {authUser ? (
+        <div>
+          <h1>you are authenticated good job</h1>
+        </div>
+      ) : (
+        <div>{redirect("/")}</div>
+      )}
     </div>
   );
 }
