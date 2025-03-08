@@ -4,6 +4,7 @@ import { getCollection } from "../utils/db";
 import { RegisterFormSchema, LoginFormSchema } from "../utils/rules";
 import { redirect } from "next/navigation";
 import { createSession } from "../utils/sessions";
+import { cookies } from "next/headers";
 
 interface RegisterState {
   error?: {
@@ -125,4 +126,12 @@ export async function login(
 
   //redirect
   redirect("/dashboard");
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+export async function logout() {
+  const cookieStore = await cookies();
+  cookieStore.delete("session");
+  redirect("/");
 }

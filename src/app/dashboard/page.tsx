@@ -1,3 +1,4 @@
+import DashboardComponent from "@/components/DashboardComponent";
 import getUserAuth from "@/utils/getUserAuth";
 import { redirect } from "next/navigation";
 
@@ -8,7 +9,7 @@ export default async function Dashboard() {
     <div>
       {authUser ? (
         <div>
-          <h1>you are authenticated good job</h1>
+          <DashboardComponent />
         </div>
       ) : (
         <div>{redirect("/")}</div>
