@@ -79,7 +79,7 @@ export async function register(
   await createSession(results.insertedId.toString());
 
   // redirect to login page
-  redirect("/dashboard");
+  redirect("/");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
