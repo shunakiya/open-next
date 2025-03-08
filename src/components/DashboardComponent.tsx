@@ -1,4 +1,4 @@
-import { logout } from "@/actions/auth";
+import { logout } from "@/utils/auth";
 
 export default function DashboardComponent() {
   return (

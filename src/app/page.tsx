@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { IoOpenOutline } from "react-icons/io5";
 import { useActionState } from "react";
-import { login } from "../actions/auth";
+import { login } from "../utils/auth";
 import Link from "next/link";
 
 interface LoginFormErrors {

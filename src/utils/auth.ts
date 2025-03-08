@@ -1,9 +1,9 @@
 "use server";
 import bcrypt from "bcrypt";
-import { getCollection } from "../utils/db";
-import { RegisterFormSchema, LoginFormSchema } from "../utils/rules";
+import { getCollection } from "./db";
+import { RegisterFormSchema, LoginFormSchema } from "./rules";
 import { redirect } from "next/navigation";
-import { createSession } from "../utils/sessions";
+import { createSession } from "./sessions";
 import { cookies } from "next/headers";
 
 interface RegisterState {
