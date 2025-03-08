@@ -1,7 +1,7 @@
 "use server";
 import bcrypt from "bcrypt";
 import { getCollection } from "../utils/db";
-import { RegisterFormSchema } from "../utils/rules";
+import { RegisterFormSchema, LoginFormSchema } from "../utils/rules";
 import { redirect } from "next/navigation";
 import { createSession } from "../utils/sessions";
 
@@ -12,6 +12,14 @@ interface RegisterState {
     password?: string[] | undefined;
   };
   email?: string;
+}
+
+interface LoginState {
+  error?: {
+    username?: string[] | undefined;
+    password?: string[] | undefined;
+  };
+  username?: string;
 }
 
 export async function register(
@@ -70,5 +78,51 @@ export async function register(
   await createSession(results.insertedId.toString());
 
   // redirect to login page
+  redirect("/dashboard");
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+export async function login(
+  state: LoginState | undefined,
+  formData: FormData
+): Promise<LoginState | undefined> {
+  // valid form fields
+  const validatedFields = LoginFormSchema.safeParse({
+    username: formData.get("username"),
+    password: formData.get("password"),
+  });
+
+  console.log(state);
+
+  // if any form fields are invalid
+  if (!validatedFields.success) {
+    return {
+      error: validatedFields.error.flatten().fieldErrors,
+      username: formData.get("username") as string,
+    };
+  }
+
+  // get form fields data
+  const { username, password } = validatedFields.data;
+
+  // check if username exists in db
+  const userCollection = await getCollection("users");
+  if (!userCollection) return { error: { username: ["Server error."] } };
+
+  const existingUser = await userCollection.findOne({ username });
+  if (!existingUser)
+    return { error: { username: ["Invalid username or password."] } };
+
+  const matchedPassword = await bcrypt.compare(password, existingUser.password);
+  if (!matchedPassword)
+    return { error: { username: ["Invalid username or password."] } };
+
+  // create a session
+  await createSession(existingUser._id.toString());
+
+  console.log(existingUser);
+
+  //redirect
   redirect("/dashboard");
 }

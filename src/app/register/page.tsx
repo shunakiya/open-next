@@ -2,30 +2,31 @@
 import Image from "next/image";
 import { IoOpenOutline } from "react-icons/io5";
 import { useActionState } from "react";
-import { login } from "../actions/auth";
+import { register } from "../../actions/auth";
 import Link from "next/link";
 
-interface LoginFormErrors {
+interface RegisterFormErrors {
   username?: string[];
+  email?: string[];
   password?: string[];
 }
 
-interface LoginState {
-  error?: LoginFormErrors;
-  username?: string;
+interface RegisterState {
+  error?: RegisterFormErrors;
+  email?: string;
 }
 
-export default function Login() {
+export default function Register() {
   const [state, action, isPending] = useActionState<
-    LoginState | undefined,
+    RegisterState | undefined,
     FormData
-  >(login, undefined);
+  >(register, undefined);
   return (
     <div className="relative z-10 flex items-center justify-center min-h-screen">
       <div className="flex py-3.5 px-3.5 shadow-2xl bg-blue-950 rounded-xl text-left gap-6 items-center">
         <div className="relative h-[550px] w-[450px]">
           <Image
-            src="/assets/images/bg-3.jpg"
+            src="/assets/images/bg-1.jpg"
             alt="Background 1"
             className="rounded-lg object-cover object-center"
             fill
@@ -49,14 +50,16 @@ export default function Login() {
         <div className="flex flex-col gap-9 w-[400px] px-5 py-10">
           <div className="">
             <div className="flex flex-col gap-4">
-              <h1 className="text-4xl font-medium tracking-tight">Login</h1>
+              <h1 className="text-4xl font-medium tracking-tight">
+                Create an account
+              </h1>
               <p className="text-sm text-slate-400 font-light">
-                Don&apos;t have an account?{" "}
+                Already have an account?{" "}
                 <Link
-                  href="/register"
+                  href="/"
                   className="underline cursor-pointer text-[#7591FF]"
                 >
-                  Sign up
+                  Log in
                 </Link>
               </p>
             </div>
@@ -83,15 +86,37 @@ export default function Login() {
 
             <div>
               <input
+                type="email"
+                placeholder="Email"
+                name="email"
+                defaultValue={state?.email}
+                className="w-full border-none bg-[#353C5A] py-3 px-4 rounded-lg font-light text-sm text-gray-50/60 transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
+              />
+
+              {state?.error?.email && (
+                <p className="text-left text-xs text-red-700 mt-1.5 ml-1">
+                  {state.error.email}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <input
                 type="password"
                 placeholder="Enter your password"
                 name="password"
                 className="w-full border-none bg-[#353C5A] py-3 px-4 rounded-lg font-light text-sm text-gray-50/60 transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
               />
+
               {state?.error?.password && (
-                <p className="text-left text-xs text-red-700 mt-1.5 ml-1">
-                  {state.error.password}
-                </p>
+                <div className="text-left text-xs text-red-700 mt-1.5 ml-1">
+                  <p>Password must:</p>
+                  <ul className="list-disc list-inside ml-1">
+                    {state.error.password.map((err) => (
+                      <li key={err}>{err}</li>
+                    ))}
+                  </ul>
+                </div>
               )}
             </div>
 
@@ -102,7 +127,7 @@ export default function Login() {
                 type="submit"
                 className="text-sm text-[#e0e6ff]"
               >
-                {isPending ? "Loading..." : "Login"}
+                {isPending ? "Loading..." : "Create account"}
               </button>
             </div>
           </form>
