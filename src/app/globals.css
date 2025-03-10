@@ -11,9 +11,13 @@
 }
 
 @theme {
-  --font-helvetica: "Helvetica", sans-serif;
+  --font-satoshi: "Satoshi", sans-serif;
+}
+
+@theme {
+  --font-notoserif: "NotoSerif", serif;
 }
 
 body {
-  font-family: var(--font-helvetica);
+  font-family: var(--font-satoshi);
 }

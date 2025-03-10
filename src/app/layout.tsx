@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { helvetica } from "../fonts";
+import { satoshi } from "../fonts";
 
 export const metadata: Metadata = {
   title: "open | Effortless Access",
@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={helvetica.variable}>
+    <html lang="en" className={satoshi.variable}>
       <body>{children}</body>
     </html>
   );
