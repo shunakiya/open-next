@@ -77,3 +77,14 @@ export const notoserifdisplay = localFont({
   ],
   variable: "--font-notoserifdisplay",
 });
+
+export const helvetica = localFont({
+  src: [
+    {
+      path: "../public/assets/fonts/Helvetica/Helvetica-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-helvetica",
+});

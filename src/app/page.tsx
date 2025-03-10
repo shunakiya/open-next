@@ -4,6 +4,7 @@ import { IoOpenOutline } from "react-icons/io5";
 import { useActionState } from "react";
 import { login } from "../utils/auth";
 import Link from "next/link";
+import { AiOutlineLoading } from "react-icons/ai";
 
 interface LoginFormErrors {
   username?: string[];
@@ -61,6 +62,18 @@ export default function Login() {
 
       <div className="relative z-10 flex items-center mx-auto">
         <div className="flex flex-col gap-9 w-[409px] px-5 py-10">
+          <div className="absolute top-6 right-7 left-7 text-center">
+            <div className="flex gap-2 items-center justify-center">
+              <Image
+                src="/assets/images/logo.png"
+                alt="Wallpaper"
+                quality={100}
+                width={20}
+                height={20}
+              />
+              <p className="font-helvetica text-lg">open</p>
+            </div>
+          </div>
           <div className="">
             <div className="flex flex-col gap-4">
               <h1 className="font-notoserif text-5xl font-medium tracking-tight text-center">
@@ -85,7 +98,7 @@ export default function Login() {
                 className="border-none w-full placerholder-[#6B6B6B] bg-[#F5F7FA] py-2.5 px-4 rounded-lg  font-light text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
               />
               {state?.error?.username && (
-                <p className="text-left text-xs text-red-700 mt-1.5 ml-1">
+                <p className="text-left text-xs text-red-700 ml-1">
                   {state.error.username}
                 </p>
               )}
@@ -101,19 +114,25 @@ export default function Login() {
                 className="w-full border-none placerholder-[#6B6B6B] bg-[#F5F7FA] py-3 px-4 rounded-lg font-light text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
               />
               {state?.error?.password && (
-                <p className="text-left text-xs text-red-700 mt-1.5 ml-1">
+                <p className="text-left text-xs text-red-700 ml-1">
                   {state.error.password}
                 </p>
               )}
             </div>
 
-            <div className="w-full items-center font-bold bg-[#121212] text-center py-2.5 rounded-lg mt-4 transition-all duration-200 ease-in-out hover:bg-[#474747] ">
+            <div className="items-center font-bold bg-[#121212] text-center py-2.5 rounded-lg mt-4 transition-all duration-200 ease-in-out hover:bg-[#474747] w-full flex justify-center">
               <button
                 disabled={isPending}
-                type="submit"
-                className="text-sm text-[#e0e6ff]"
+                className="text-sm w-full text-center flex justify-center items-center text-[#e0e6ff]"
               >
-                {isPending ? "Loading..." : "Sign In"}
+                {isPending ? (
+                  <div className="flex items-center gap-1.5">
+                    <AiOutlineLoading className="animate-spin" />
+                    <p>Loading...</p>
+                  </div>
+                ) : (
+                  "Sign In"
+                )}
               </button>
             </div>
           </form>

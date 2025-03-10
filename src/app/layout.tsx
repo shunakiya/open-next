@@ -3,7 +3,7 @@ import "./globals.css";
 import { satoshi } from "../fonts";
 
 export const metadata: Metadata = {
-  title: "open | Effortless Access",
+  title: "open",
   description: "Effortless access, and unlock your world with a tap or touch.",
 };
 
