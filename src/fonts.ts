@@ -51,3 +51,29 @@ export const notoserif = localFont({
   ],
   variable: "--font-notoserif",
 });
+
+export const notoserifdisplay = localFont({
+  src: [
+    {
+      path: "../public/assets/fonts/NotoSerifDisplay/NotoSerifDisplay-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/assets/fonts/NotoSerifDisplay/NotoSerifDisplay-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/assets/fonts/NotoSerifDisplay/NotoSerifDisplay-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/assets/fonts/NotoSerifDisplay/NotoSerifDisplay-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-notoserifdisplay",
+});

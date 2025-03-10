@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  color: #e0e6ff;
-  background-color: #4d5c7c;
+  color: #121212;
+  background-color: white;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -16,6 +16,10 @@
 
 @theme {
   --font-notoserif: "NotoSerif", serif;
+}
+
+@theme {
+  --font-notoserifdisplay: "NotoSerifDisplay", serif;
 }
 
 body {
