@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { IoOpenOutline } from "react-icons/io5";
-import { useActionState } from "react";
+import { useActionState, useMemo } from "react";
 import { register } from "../../utils/auth";
 import Link from "next/link";
 import { AiOutlineLoading } from "react-icons/ai";
@@ -22,12 +22,47 @@ export default function Register() {
     RegisterState | undefined,
     FormData
   >(register, undefined);
+
+  // memoize form error messages
+  const formErrors = useMemo(
+    () => ({
+      username: state?.error?.username ? (
+        <p className="text-left text-xs text-red-700 ml-1">
+          {state.error.username}
+        </p>
+      ) : null,
+      email: state?.error?.email ? (
+        <p className="text-left text-xs text-red-700 ml-1">
+          {state.error.email}
+        </p>
+      ) : null,
+      password: state?.error?.password ? (
+        <p className="text-left text-xs text-red-700 ml-1">
+          {state.error.password}
+        </p>
+      ) : null,
+    }),
+    [state?.error?.username, state?.error?.email, state?.error?.password]
+  );
+
+  // memoize button content
+  const buttonContent = useMemo(() => {
+    return isPending ? (
+      <div className="flex items-center gap-1.5">
+        <AiOutlineLoading className="animate-spin" />
+        <p>Loading...</p>
+      </div>
+    ) : (
+      "Sign In"
+    );
+  }, [isPending]);
+
   return (
     <div className="flex h-screen overflow-hidden">
       <div className="relative h-full w-1/2 p-2">
-        <div className="relative h-full w-full rounded-2xl overflow-hidden">
+        <div className="relative h-full w-full rounded-l-2xl overflow-hidden">
           <Image
-            src="/assets/images/bg-2.png"
+            src="/assets/images/register/register-bg-2.png"
             alt="Wallpaper"
             quality={100}
             fill
@@ -36,14 +71,15 @@ export default function Register() {
           />
         </div>
 
-        <div className="absolute top-8 right-8 z-10 items-center">
+        {/* top right of image github link*/}
+        <div className="absolute top-7 right-7 z-10 items-center">
           <a
             href="https://github.com/shunakiya/SALSNB"
             target="_blank"
-            className="flex gap-1.5 rounded-xl bg-white/30 px-3 py-1.5 w-fit items-center"
+            className="flex text-white/90 hover:text-[#7591FF] transition-all duation-200 ease-in-out gap-1.5 rounded-xl bg-white/30 px-3 py-1.5 w-fit items-center"
           >
-            <p className="text-white/90 text-sm">GitHub Page</p>
-            <IoOpenOutline size={15} className="text-white/80 mt-[1px]" />
+            <p className="text-sm">GitHub Page</p>
+            <IoOpenOutline size={15} className="mt-[1px]" />
           </a>
         </div>
 
@@ -96,13 +132,9 @@ export default function Register() {
                 placeholder="Enter your username"
                 autoComplete="true"
                 name="username"
-                className="border-none w-full placerholder-[#6B6B6B] bg-[#F5F7FA] py-2.5 px-4 rounded-lg  font-light text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
+                className="border-none w-full placerholder-[#6B6B6B] bg-[#F5F7FA] py-2.5 px-4 rounded-lg text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
               />
-              {state?.error?.username && (
-                <p className="text-left text-xs text-red-700 ml-1">
-                  {state.error.username}
-                </p>
-              )}
+              {formErrors.username}
             </div>
 
             <div className="flex flex-col gap-2">
@@ -112,14 +144,9 @@ export default function Register() {
                 placeholder="Enter your email"
                 name="email"
                 defaultValue={state?.email}
-                className="w-full border-none placerholder-[#6B6B6B] bg-[#F5F7FA] py-3 px-4 rounded-lg font-light text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
+                className="w-full border-none placerholder-[#6B6B6B] bg-[#F5F7FA] py-3 px-4 rounded-lg text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
               />
-
-              {state?.error?.email && (
-                <p className="text-left text-xs text-red-700 ml-1">
-                  {state.error.email}
-                </p>
-              )}
+              {formErrors.email}
             </div>
 
             <div className="flex flex-col gap-2">
@@ -129,13 +156,9 @@ export default function Register() {
                 type="password"
                 placeholder="Enter your password"
                 name="password"
-                className="w-full border-none placerholder-[#6B6B6B] bg-[#F5F7FA] py-3 px-4 rounded-lg font-light text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
+                className="w-full border-none placerholder-[#6B6B6B] bg-[#F5F7FA] py-3 px-4 rounded-lg text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
               />
-              {state?.error?.password && (
-                <p className="text-left text-xs text-red-700 ml-1">
-                  {state.error.password}
-                </p>
-              )}
+              {formErrors.password}
             </div>
 
             <div className="items-center font-bold bg-[#121212] text-center py-2.5 rounded-lg mt-4 transition-all duration-200 ease-in-out hover:bg-[#474747] w-full flex justify-center">
