@@ -53,7 +53,7 @@ export default function Register() {
         <p>Loading...</p>
       </div>
     ) : (
-      "Sign In"
+      "Sign Up"
     );
   }, [isPending]);
 
@@ -166,14 +166,7 @@ export default function Register() {
                 disabled={isPending}
                 className="text-sm w-full text-center flex justify-center items-center text-[#e0e6ff]"
               >
-                {isPending ? (
-                  <div className="flex items-center gap-1.5">
-                    <AiOutlineLoading className="animate-spin" />
-                    <p>Loading...</p>
-                  </div>
-                ) : (
-                  "Sign Up"
-                )}
+                {buttonContent}
               </button>
             </div>
           </form>
