@@ -158,7 +158,7 @@ export default function Login() {
             Your World <br />
             With a Touch
           </p>
-          <p className="text-white/85 font-satoshi font-light px-3">
+          <p className="text-white/90 font-satoshi font-light px-3">
             Seamless security meets modern convenience. Unlock your world with a
             simple tap or touch.
           </p>
