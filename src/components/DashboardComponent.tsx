@@ -2,6 +2,10 @@
 import Image from "next/image";
 import { CiLock } from "react-icons/ci";
 import { IoFingerPrintOutline } from "react-icons/io5";
+import { GrHomeRounded } from "react-icons/gr";
+import { GoPerson } from "react-icons/go";
+import { BsGear } from "react-icons/bs";
+import { FaRegClock } from "react-icons/fa6";
 
 export default function DashboardComponent() {
   return (
@@ -31,7 +35,7 @@ export default function DashboardComponent() {
                 <h2 className="text-3xl font-notoserifdisplay">
                   Welcome back, _____
                 </h2>
-                <p className="text-white/80 pl-1 mt-1">
+                <p className="text-white/80 pl-1 mt-1.5">
                   Your world is ready to explore
                 </p>
               </div>
@@ -49,15 +53,15 @@ export default function DashboardComponent() {
               <div className="w-18 h-18 rounded-full bg-red-300 flex items-center justify-center mb-2.5">
                 <CiLock size={40} />
               </div>
-              <span className="font-medium text-gray-700">Locked</span>
+              <p className="font-medium text-gray-700">Locked</p>
             </button>
 
             {/* fingeprint access settings */}
-            <button className="flex flex-col shadow-md items-center justify-center p-8 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-              <div className="w-18 h-18 rounded-full bg-purple-100 flex items-center justify-center mb-2.5">
+            <button className="flex flex-col shadow-md items-center justify-center p-8 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors">
+              <div className="w-18 h-18 rounded-full bg-blue-300 flex items-center justify-center mb-2.5">
                 <IoFingerPrintOutline size={40} />
               </div>
-              <span className="font-medium text-gray-700">Fingerprint</span>
+              <p className="font-medium text-gray-700">Fingerprints</p>
             </button>
           </div>
 
@@ -74,9 +78,9 @@ export default function DashboardComponent() {
                     Today at 12:12 PM
                   </p>
                 </div>
-                <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                <p className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
                   Success
-                </span>
+                </p>
               </div>
             </div>
 
@@ -90,9 +94,9 @@ export default function DashboardComponent() {
                     Yesterday at 6:49 PM
                   </p>
                 </div>
-                <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                <p className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
                   Success
-                </span>
+                </p>
               </div>
             </div>
 
@@ -104,30 +108,30 @@ export default function DashboardComponent() {
                     2 Days Ago at 4:15 PM
                   </p>
                 </div>
-                <span className="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">
-                  Unsuccess
-                </span>
+                <p className="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">
+                  Unsuccessful
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="flex justify-around items-center px-6 py-4 border-t border-gray-100">
+        <div className="flex justify-around items-center px-6 py-5 border-t border-gray-100">
           <button className="flex flex-col items-center text-[#703BE7]">
-            {/* <HomeIcon className="w-6 h-6" /> */}
-            <span className="text-xs font-medium">Home</span>
+            <GrHomeRounded className="w-4 h-4 mb-1.5" />
+            <p className="text-xs font-medium">Home</p>
           </button>
           <button className="flex flex-col items-center text-gray-400 hover:text-[#703BE7]">
-            {/* <ChartBarIcon className="w-6 h-6" /> */}
-            <span className="text-xs font-medium">Activity</span>
+            <FaRegClock className="w-4 h-4 mb-1.5" />
+            <p className="text-xs font-medium">Activity</p>
           </button>
           <button className="flex flex-col items-center text-gray-400 hover:text-[#703BE7]">
-            {/* <UserIcon className="w-6 h-6" /> */}
-            <span className="text-xs font-medium">Profile</span>
+            <GoPerson className="w-4 h-4 mb-1.5" />
+            <p className="text-xs font-medium">Profile</p>
           </button>
           <button className="flex flex-col items-center text-gray-400 hover:text-[#703BE7]">
-            {/* <CogIcon className="w-6 h-6" /> */}
-            <span className="text-xs font-medium">Settings</span>
+            <BsGear className="w-4 h-4 mb-1.5" />
+            <p className="text-xs font-medium">Settings</p>
           </button>
         </div>
       </div>
