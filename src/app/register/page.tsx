@@ -1,10 +1,11 @@
 "use client";
 import Image from "next/image";
 import { IoOpenOutline } from "react-icons/io5";
-import { useActionState, useMemo } from "react";
+import { useActionState, useMemo, useState } from "react";
 import { register } from "../../utils/auth";
 import Link from "next/link";
 import { AiOutlineLoading } from "react-icons/ai";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 interface RegisterFormErrors {
   username?: string[];
@@ -22,6 +23,18 @@ export default function Register() {
     RegisterState | undefined,
     FormData
   >(register, undefined);
+  const [isShowingPassword, setIsShowingPassword] = useState<boolean>(false);
+  const [inputTypeChange, setInputTypeChange] = useState<string>("password");
+
+  const togglePassword = () => {
+    setIsShowingPassword(!isShowingPassword);
+
+    if (!isShowingPassword) {
+      setInputTypeChange("text");
+    } else {
+      setInputTypeChange("password");
+    }
+  };
 
   // memoize form error messages
   const formErrors = useMemo(
@@ -60,7 +73,7 @@ export default function Register() {
   return (
     <div className="flex h-screen overflow-hidden">
       <div className="relative h-full w-1/2 p-2">
-        <div className="relative h-full w-full rounded-l-2xl overflow-hidden">
+        <div className="relative h-full w-full rounded-2xl overflow-hidden">
           <Image
             src="/assets/images/register/register-bg-2.png"
             alt="Wallpaper"
@@ -151,13 +164,25 @@ export default function Register() {
 
             <div className="flex flex-col gap-2">
               <p className="text-sm">Password</p>
-
-              <input
-                type="password"
-                placeholder="Enter your password"
-                name="password"
-                className="w-full border-none placerholder-[#6B6B6B] bg-[#F5F7FA] py-3 px-4 rounded-lg text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
-              />
+              <div className="relative">
+                <input
+                  type={inputTypeChange}
+                  placeholder="Enter your password"
+                  name="password"
+                  className="w-full border-none placerholder-[#6B6B6B] bg-[#F5F7FA] py-3 px-4 rounded-lg text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={togglePassword}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer"
+                >
+                  {isShowingPassword ? (
+                    <FiEyeOff size={20} />
+                  ) : (
+                    <FiEye size={20} />
+                  )}
+                </button>
+              </div>
               {formErrors.password}
             </div>
 

@@ -5,6 +5,9 @@ import { redirect } from "next/navigation";
 export default async function Dashboard() {
   const authUser = await getUserAuth();
 
+  if (authUser) {
+  }
+
   return (
     <div>
       {authUser ? (

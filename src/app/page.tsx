@@ -55,7 +55,7 @@ export default function Login() {
     return paths;
   }, []);
 
-  // useCallback for the image transition logic
+  // image transition logic
   const transitionToNextImage = useCallback(() => {
     setPreviousImage(activeImage);
     setTransitioning(true);
@@ -104,7 +104,7 @@ export default function Login() {
   return (
     <div className="flex h-screen">
       <div className="relative h-full w-1/2 p-2">
-        <div className="relative h-full w-full rounded-l-2xl overflow-hidden">
+        <div className="relative h-full w-full rounded-2xl overflow-hidden">
           {/* current image */}
           <Image
             key={`active-${activeImage}`}
