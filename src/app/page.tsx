@@ -11,6 +11,7 @@ import {
 import { login } from "../utils/auth";
 import Link from "next/link";
 import { AiOutlineLoading } from "react-icons/ai";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 interface LoginFormErrors {
   username?: string[];
@@ -31,7 +32,19 @@ export default function Login() {
   const [activeImage, setActiveImage] = useState<number>(1);
   const [previousImage, setPreviousImage] = useState<number>(0);
   const [transitioning, setTransitioning] = useState<boolean>(false);
+  const [isShowingPassword, setIsShowingPassword] = useState<boolean>(false);
+  const [inputTypeChange, setInputTypeChange] = useState<string>("password");
   const totalImages = 4;
+
+  const togglePassword = () => {
+    setIsShowingPassword(!isShowingPassword);
+
+    if (!isShowingPassword) {
+      setInputTypeChange("text");
+    } else {
+      setInputTypeChange("password");
+    }
+  };
 
   // memoize image paths
   const imagePaths = useMemo(() => {
@@ -196,13 +209,26 @@ export default function Login() {
             {/* password input field */}
             <div className="flex flex-col gap-2">
               <p className="text-sm">Password</p>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                name="password"
-                autoComplete="current-password"
-                className="w-full border-none placerholder-[#6B6B6B] bg-[#F5F7FA] py-3 px-4 rounded-lg text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
-              />
+              <div className="relative">
+                <input
+                  type={inputTypeChange}
+                  placeholder="Enter your password"
+                  name="password"
+                  autoComplete="current-password"
+                  className="w-full border-none placeholder-[#6B6B6B] bg-[#F5F7FA] py-3 px-4 pr-10 rounded-lg text-sm transition-all ease-in-out duration-200 focus:ring-1 focus:ring-[#708ae6] focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={togglePassword}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer"
+                >
+                  {isShowingPassword ? (
+                    <FiEyeOff size={20} />
+                  ) : (
+                    <FiEye size={20} />
+                  )}
+                </button>
+              </div>
               {formErrors.password}
             </div>
 
