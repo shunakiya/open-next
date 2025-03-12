@@ -61,7 +61,7 @@ export default function Register() {
   // memoize button content
   const buttonContent = useMemo(() => {
     return isPending ? (
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-2">
         <AiOutlineLoading className="animate-spin" />
         <p>Loading...</p>
       </div>

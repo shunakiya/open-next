@@ -6,13 +6,23 @@ import { GrHomeRounded } from "react-icons/gr";
 import { GoPerson } from "react-icons/go";
 import { BsGear } from "react-icons/bs";
 import { FaRegClock } from "react-icons/fa6";
+import { ObjectId } from "mongodb";
 
-export default function DashboardComponent() {
+interface UserData {
+  _id: ObjectId;
+  username: string;
+}
+
+interface DashboardComponent {
+  user: UserData;
+}
+
+export default function DashboardComponent({ user }: DashboardComponent) {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 py-1">
       <div className="w-full max-w-md bg-white shadow-xl rounded-2xl overflow-hidden">
         <div className="relative">
-          <div className="relative w-full pt-8 pb-14 px-6">
+          <div className="relative w-full pt-8 pb-12 px-6">
             <div className="absolute inset-0 z-0 overflow-hidden">
               <Image
                 src="/assets/images/register/register-bg-2.png"
@@ -33,7 +43,7 @@ export default function DashboardComponent() {
 
               <div className="text-white">
                 <h2 className="text-3xl font-notoserifdisplay">
-                  Welcome back, _____
+                  Welcome back, {user.username}
                 </h2>
                 <p className="text-white/80 pl-1 mt-1.5">
                   Your world is ready to explore
@@ -121,15 +131,15 @@ export default function DashboardComponent() {
             <GrHomeRounded className="w-4 h-4 mb-1.5" />
             <p className="text-xs font-medium">Home</p>
           </button>
-          <button className="flex flex-col items-center text-gray-400 hover:text-[#703BE7]">
+          <button className="flex flex-col items-center text-gray-400 hover:text-[#703BE7] transition-colors">
             <FaRegClock className="w-4 h-4 mb-1.5" />
             <p className="text-xs font-medium">Activity</p>
           </button>
-          <button className="flex flex-col items-center text-gray-400 hover:text-[#703BE7]">
+          <button className="flex flex-col items-center text-gray-400 hover:text-[#703BE7] transition-colors">
             <GoPerson className="w-4 h-4 mb-1.5" />
             <p className="text-xs font-medium">Profile</p>
           </button>
-          <button className="flex flex-col items-center text-gray-400 hover:text-[#703BE7]">
+          <button className="flex flex-col items-center text-gray-400 hover:text-[#703BE7] transition-colors">
             <BsGear className="w-4 h-4 mb-1.5" />
             <p className="text-xs font-medium">Settings</p>
           </button>
