@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     siteName: "open",
     images: [
       {
-        url: "https://un-lock.vercel.app/images/preview.png",
+        url: "https://un-lock.vercel.app/assets/images/preview.png",
         width: 1200,
         height: 600,
         alt: "open App Preview",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     title: "open",
     description:
       "Effortless access, and unlock your world with a tap or touch.",
-    images: ["https://ponder-it.vercel.app/images/preview.png"],
+    images: ["https://un-lock.vercel.app/assets/images/preview.png"],
   },
   robots: "index, follow",
 };
