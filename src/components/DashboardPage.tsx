@@ -1,23 +1,22 @@
-// import { logout } from "@/utils/auth";
 import Image from "next/image";
 import { CiLock } from "react-icons/ci";
 import { IoFingerPrintOutline } from "react-icons/io5";
 import { GrHomeRounded } from "react-icons/gr";
-import { GoPerson } from "react-icons/go";
 import { BsGear } from "react-icons/bs";
 import { FaRegClock } from "react-icons/fa6";
 import { ObjectId } from "mongodb";
+import Link from "next/link";
 
 interface UserData {
   _id: ObjectId;
   username: string;
 }
 
-interface DashboardComponent {
+interface Dashboard {
   user: UserData;
 }
 
-export default function DashboardComponent({ user }: DashboardComponent) {
+export default function DashboardPage({ user }: Dashboard) {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 py-1">
       <div className="w-full max-w-md bg-white shadow-xl rounded-2xl overflow-hidden">
@@ -127,22 +126,24 @@ export default function DashboardComponent({ user }: DashboardComponent) {
         </div>
 
         <div className="flex justify-around items-center px-6 py-5 border-t border-gray-100">
-          <button className="flex flex-col items-center text-[#703BE7]">
+          <Link href="/" className="flex flex-col items-center text-[#703BE7]">
             <GrHomeRounded className="w-4 h-4 mb-1.5" />
             <p className="text-xs font-medium">Home</p>
-          </button>
-          <button className="flex flex-col items-center text-gray-400 hover:text-[#703BE7] transition-colors">
+          </Link>
+          <Link
+            href="/activity"
+            className="flex flex-col items-center text-gray-400 hover:text-[#703BE7] transition-colors"
+          >
             <FaRegClock className="w-4 h-4 mb-1.5" />
             <p className="text-xs font-medium">Activity</p>
-          </button>
-          <button className="flex flex-col items-center text-gray-400 hover:text-[#703BE7] transition-colors">
-            <GoPerson className="w-4 h-4 mb-1.5" />
-            <p className="text-xs font-medium">Profile</p>
-          </button>
-          <button className="flex flex-col items-center text-gray-400 hover:text-[#703BE7] transition-colors">
+          </Link>
+          <Link
+            href="settings"
+            className="flex flex-col items-center text-gray-400 hover:text-[#703BE7] transition-colors"
+          >
             <BsGear className="w-4 h-4 mb-1.5" />
             <p className="text-xs font-medium">Settings</p>
-          </button>
+          </Link>
         </div>
       </div>
     </div>

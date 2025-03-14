@@ -1,4 +1,4 @@
-import DashboardPage from "@/components/DashboardPage";
+import ActivityPage from "@/components/ActivityPage";
 import getUserAuth from "@/utils/getUserAuth";
 import { redirect } from "next/navigation";
 import { getCollection } from "@/utils/db";
@@ -9,7 +9,7 @@ interface UserDocument extends Document {
   username: string;
 }
 
-export default async function Dashboard() {
+export default async function Settings() {
   const authUser = await getUserAuth();
 
   if (!authUser) {
@@ -35,7 +35,7 @@ export default async function Dashboard() {
 
   return (
     <div>
-      <DashboardPage user={userData} />
+      <ActivityPage user={userData} />
     </div>
   );
 }
