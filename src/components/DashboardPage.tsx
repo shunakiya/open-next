@@ -126,7 +126,10 @@ export default function DashboardPage({ user }: Dashboard) {
         </div>
 
         <div className="flex justify-around items-center px-6 py-5 border-t border-gray-100">
-          <Link href="/" className="flex flex-col items-center text-[#703BE7]">
+          <Link
+            href="/dashboard"
+            className="flex flex-col items-center text-[#703BE7]"
+          >
             <GrHomeRounded className="w-4 h-4 mb-1.5" />
             <p className="text-xs font-medium">Home</p>
           </Link>
