@@ -12,11 +12,11 @@ interface UserData {
   username: string;
 }
 
-interface Dashboard {
+interface Home {
   user: UserData;
 }
 
-export default function DashboardPage({ user }: Dashboard) {
+export default function HomePage({ user }: Home) {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 py-1">
       <div className="w-full max-w-md bg-white shadow-xl rounded-2xl overflow-hidden">
@@ -25,7 +25,7 @@ export default function DashboardPage({ user }: Dashboard) {
             <div className="absolute inset-0 z-0 overflow-hidden">
               <Image
                 src="/assets/images/register/register-bg-2.png"
-                alt="Dashboard background"
+                alt="Home background"
                 fill
                 priority
                 style={{ objectFit: "cover" }}
@@ -36,7 +36,7 @@ export default function DashboardPage({ user }: Dashboard) {
             <div className="relative z-10">
               <div className="flex justify-between items-center mb-6">
                 <h1 className="text-white/90 text-xl font-notoserifdisplay">
-                  Dashboard
+                  Home
                 </h1>
               </div>
 
@@ -127,7 +127,7 @@ export default function DashboardPage({ user }: Dashboard) {
 
         <div className="flex justify-around items-center px-6 py-5 border-t border-gray-100">
           <Link
-            href="/dashboard"
+            href="/home"
             className="flex flex-col items-center text-[#703BE7]"
           >
             <GrHomeRounded className="w-4 h-4 mb-1.5" />

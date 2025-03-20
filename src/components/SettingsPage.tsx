@@ -6,6 +6,8 @@ import { FaRegClock, FaWifi } from "react-icons/fa6";
 import { GrHomeRounded } from "react-icons/gr";
 import { FiLogOut } from "react-icons/fi";
 import Image from "next/image";
+import { FaRegTrashCan } from "react-icons/fa6";
+import { IoFingerPrintOutline } from "react-icons/io5";
 
 interface UserData {
   _id: ObjectId;
@@ -25,7 +27,7 @@ export default function SettingsPage({ user }: Settings) {
             <div className="absolute inset-0 z-0 overflow-hidden">
               <Image
                 src="/assets/images/register/register-bg-2.png"
-                alt="Dashboard background"
+                alt="Home background"
                 fill
                 priority
                 style={{ objectFit: "cover" }}
@@ -80,14 +82,52 @@ export default function SettingsPage({ user }: Settings) {
           <h3 className="text-lg font-semibold text-gray-800 mb-3 mt-6">
             Fingerprints
           </h3>
-          <div className="p-4 bg-gray-50 rounded-xl shadow-sm">
-            <p>the fingerprint settings and ui will go here</p>
+
+          <div className="flex flex-col space-y-3">
+            <div className="py-2 px-3 bg-gray-50 rounded-xl shadow-sm">
+              <div className="flex items-center justify-between">
+                <div className="flex gap-4 items-center">
+                  <IoFingerPrintOutline size={22} className="text-gray-400" />
+                  <p>Fingerprint 1</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <p className="text-2xl text-gray-400">|</p>
+                  <FaRegTrashCan size={18} className="text[#12121290]" />
+                </div>
+              </div>
+            </div>
+
+            <div className="py-2 px-3 bg-gray-50 rounded-xl shadow-sm">
+              <div className="flex items-center justify-between">
+                <div className="flex gap-4 items-center">
+                  <IoFingerPrintOutline size={22} className="text-gray-400" />
+                  <p>Fingerprint 2</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <p className="text-2xl text-gray-400">|</p>
+                  <FaRegTrashCan size={18} className="text[#12121290]" />
+                </div>
+              </div>
+            </div>
+
+            <div className="py-2 px-3 bg-gray-50 rounded-xl shadow-sm">
+              <div className="flex items-center justify-between">
+                <div className="flex gap-4 items-center">
+                  <IoFingerPrintOutline size={22} className="text-gray-400" />
+                  <p>Fingerprint 3</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <p className="text-2xl text-gray-400">|</p>
+                  <FaRegTrashCan size={18} className="text[#12121290]" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <div className="flex justify-around items-center px-6 py-5 border-t border-gray-100">
           <Link
-            href="/dashboard"
+            href="/home"
             className="flex flex-col items-center text-gray-400 hover:text-[#703BE7] transition-colors"
           >
             <GrHomeRounded className="w-4 h-4 mb-1.5" />

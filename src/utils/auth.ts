@@ -125,7 +125,7 @@ export async function login(
   console.log(existingUser);
 
   //redirect
-  redirect("/dashboard");
+  redirect("/home");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
