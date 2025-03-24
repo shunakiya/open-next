@@ -7,8 +7,8 @@ import { GrHomeRounded } from "react-icons/gr";
 import { BsGear } from "react-icons/bs";
 import { FaRegClock } from "react-icons/fa6";
 import Link from "next/link";
-import { toggleLockAPI } from "@/utils/flaskapi";
-import { useState } from "react";
+import { initalState, toggleLockAPI } from "@/utils/flaskapi";
+import { useEffect, useState } from "react";
 
 interface UserData {
   _id: string;
@@ -21,16 +21,35 @@ interface Home {
 
 export default function HomePage({ user }: Home) {
   const [isLocked, setIsLocked] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    async function fetchInitialLockState() {
+      try {
+        const data = await initalState();
+
+        console.log(isLoading);
+
+        setIsLocked(data.isLocked);
+      } catch (error) {
+        console.log("Error fetching data", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchInitialLockState();
+  }, []);
 
   async function toggleLock() {
     try {
-      const response = await toggleLockAPI();
-
-      const isLocked = response.json();
-
-      setIsLocked(isLocked);
+      setIsLoading(true);
+      const data = await toggleLockAPI();
+      setIsLocked(data.isLocked);
     } catch (error) {
-      console.log("Error toggling lock:", error);
+      console.error("Error toggling lock:", error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
