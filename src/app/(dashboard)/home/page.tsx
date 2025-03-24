@@ -33,9 +33,14 @@ export default async function Home() {
     redirect("/");
   }
 
+  const converetedUserData = {
+    _id: userData._id.toString(),
+    username: userData.username,
+  };
+
   return (
     <div>
-      <HomePage user={userData} />
+      <HomePage user={converetedUserData} />
     </div>
   );
 }

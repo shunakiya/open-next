@@ -1,14 +1,17 @@
+"use client";
+
 import Image from "next/image";
 import { CiLock } from "react-icons/ci";
 import { IoFingerPrintOutline } from "react-icons/io5";
 import { GrHomeRounded } from "react-icons/gr";
 import { BsGear } from "react-icons/bs";
 import { FaRegClock } from "react-icons/fa6";
-import { ObjectId } from "mongodb";
 import Link from "next/link";
+import { toggleLockAPI } from "@/utils/flaskapi";
+import { useState } from "react";
 
 interface UserData {
-  _id: ObjectId;
+  _id: string;
   username: string;
 }
 
@@ -17,6 +20,20 @@ interface Home {
 }
 
 export default function HomePage({ user }: Home) {
+  const [isLocked, setIsLocked] = useState<boolean>(false);
+
+  async function toggleLock() {
+    try {
+      const response = await toggleLockAPI();
+
+      const isLocked = response.json();
+
+      setIsLocked(isLocked);
+    } catch (error) {
+      console.log("Error toggling lock:", error);
+    }
+  }
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 py-1">
       <div className="w-full max-w-md bg-white shadow-xl rounded-2xl overflow-hidden">
@@ -58,12 +75,27 @@ export default function HomePage({ user }: Home) {
           </h3>
           <div className="grid grid-cols-2 gap-3">
             {/* lock/unlock button */}
-            <button className="flex flex-col shadow-md items-center justify-center p-8 bg-red-50 rounded-xl hover:bg-red-100 transition-colors">
-              <div className="w-18 h-18 rounded-full bg-red-300 flex items-center justify-center mb-2.5">
-                <CiLock size={40} />
-              </div>
-              <p className="font-medium text-gray-700">Locked</p>
-            </button>
+            {isLocked ? (
+              <button
+                onClick={toggleLock}
+                className="flex flex-col shadow-md items-center justify-center p-8 bg-red-50 rounded-xl hover:bg-red-100 transition-colors"
+              >
+                <div className="w-18 h-18 rounded-full bg-red-300 flex items-center justify-center mb-2.5">
+                  <CiLock size={40} />
+                </div>
+                <p className="font-medium text-gray-700">Locked</p>
+              </button>
+            ) : (
+              <button
+                onClick={toggleLock}
+                className="flex flex-col shadow-md items-center justify-center p-8 bg-green-50 rounded-xl hover:bg-green-100 transition-colors"
+              >
+                <div className="w-18 h-18 rounded-full bg-green-300 flex items-center justify-center mb-2.5">
+                  <CiLock size={40} />
+                </div>
+                <p className="font-medium text-gray-700">Unlocked</p>
+              </button>
+            )}
 
             {/* fingeprint access settings */}
             <button className="flex flex-col shadow-md items-center justify-center p-8 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors">

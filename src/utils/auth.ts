@@ -94,8 +94,6 @@ export async function login(
     password: formData.get("password"),
   });
 
-  console.log(state);
-
   // if any form fields are invalid
   if (!validatedFields.success) {
     return {
