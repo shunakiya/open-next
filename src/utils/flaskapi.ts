@@ -3,7 +3,7 @@ const API_URL = `http://${process.env.DB_URI}:5000`;
 export async function toggleLockAPI() {
   try {
     console.log("fetching data from rpi");
-    const response = await fetch(`${API_URL}/toggle-lock`, {
+    const response = await fetch(`${API_URL}/test`, {
       method: "GET",
     });
 
@@ -13,6 +13,7 @@ export async function toggleLockAPI() {
 
     const data = await response.json();
 
+    console.log("returned data:", data);
     return data;
   } catch (error) {
     console.log("Error fetching data:", error);
