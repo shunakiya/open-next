@@ -1,4 +1,4 @@
-const API_URL = `http://${process.env.DB_URI}:5000`;
+const API_URL = `http://192.168.137.8:5000`;
 
 export async function toggleLockAPI() {
   try {

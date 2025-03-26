@@ -45,6 +45,7 @@ export default function HomePage({ user }: Home) {
     try {
       setIsLoading(true);
       const data = await toggleLockAPI();
+      console.log(isLoading);
 
       setIsLocked(data.success);
     } catch (error) {

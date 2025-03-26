@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { IoOpenOutline } from "react-icons/io5";
 import { useActionState, useMemo, useState } from "react";
-import { register } from "../../utils/auth";
+import { register } from "../../utils/auth/auth";
 import Link from "next/link";
 import { AiOutlineLoading } from "react-icons/ai";
 import { FiEye, FiEyeOff } from "react-icons/fi";

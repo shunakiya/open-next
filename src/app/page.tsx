@@ -8,7 +8,7 @@ import {
   useCallback,
   useMemo,
 } from "react";
-import { login } from "../utils/auth";
+import { login } from "../utils/auth/auth";
 import Link from "next/link";
 import { AiOutlineLoading } from "react-icons/ai";
 import { FiEye, FiEyeOff } from "react-icons/fi";

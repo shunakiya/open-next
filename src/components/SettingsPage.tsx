@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { logout } from "@/utils/auth";
+import { logout } from "@/utils/auth/auth";
 import { BsGear } from "react-icons/bs";
 import Link from "next/link";
 import { FaRegClock, FaWifi } from "react-icons/fa6";

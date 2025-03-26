@@ -1,6 +1,6 @@
 "use server";
 import bcrypt from "bcrypt";
-import { getCollection } from "./db";
+import { getCollection } from "../db";
 import { RegisterFormSchema, LoginFormSchema } from "./rules";
 import { redirect } from "next/navigation";
 import { createSession } from "./sessions";
