@@ -1,5 +1,5 @@
 import ActivityPage from "@/components/ActivityPage";
-import getUserAuth from "@/utils/getUserAuth";
+import getUserAuth from "@/utils/auth/getUserAuth";
 import { redirect } from "next/navigation";
 import { getCollection } from "@/utils/db";
 import { ObjectId, Document } from "mongodb";
