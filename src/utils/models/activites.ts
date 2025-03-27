@@ -5,17 +5,16 @@ import { getCollection } from "../db";
 
 export interface Activity {
   _id?: ObjectId;
-  userId: ObjectId;
-  type: "app" | "fingerprint" | "nfc";
-  status: boolean;
   timestamp: Date;
+  isSuccessful: boolean;
+  type: "app" | "fingerprint" | "nfc";
 }
 
 // function to create new activity
 export async function createNewActivity(
   userId: string,
   type: Activity["type"],
-  status: boolean
+  isSuccessful: boolean
 ) {
   try {
     const activitiesCollection = await getCollection("activities");
@@ -32,11 +31,11 @@ export async function createNewActivity(
       userId: userObjectId,
     });
 
+    // creating object for new data
     const activity: Activity = {
-      userId: new ObjectId(userId),
-      type,
-      status,
       timestamp: new Date(),
+      isSuccessful,
+      type,
     };
 
     if (existingUserActivities) {
@@ -47,11 +46,9 @@ export async function createNewActivity(
     } else {
       return await activitiesCollection.insertOne({
         userId: userObjectId,
-        activites: [activity],
+        activities: [activity],
       });
     }
-
-    return await activitiesCollection?.insertOne(activity);
   } catch (error) {
     console.log("Error creating new activity:", error);
     return null;
@@ -60,6 +57,7 @@ export async function createNewActivity(
 
 export async function getActivityList(userId: string) {
   try {
+    console.log(userId);
   } catch (error) {
     console.log("Error fetching activities:", error);
   }

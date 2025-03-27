@@ -2,7 +2,7 @@ const API_URL = `http://192.168.137.8:5000`;
 
 export async function toggleLockAPI() {
   try {
-    console.log("fetching data from rpi");
+    console.log("sending togglelock to rpi");
     const response = await fetch(`${API_URL}/test`, {
       method: "GET",
     });

@@ -31,6 +31,9 @@ export default function HomePage({ user }: Home) {
   async function toggleLock() {
     try {
       setIsLoading(true);
+      console.log("creating new activity...");
+      await createNewActivity(user._id, "app", true);
+
       const data = await toggleLockAPI();
       console.log(isLoading);
 
