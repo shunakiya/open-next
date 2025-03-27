@@ -8,7 +8,8 @@ import { BsGear } from "react-icons/bs";
 import { FaRegClock } from "react-icons/fa6";
 import Link from "next/link";
 import { toggleLockAPI } from "@/utils/flaskapi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createNewActivity } from "@/utils/models/activites";
 
 interface UserData {
   _id: string;
@@ -23,23 +24,9 @@ export default function HomePage({ user }: Home) {
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   async function fetchInitialLockState() {
-  //     try {
-  //       const data = await initalState();
-
-  //       console.log(isLoading);
-
-  //       setIsLocked(data.isLocked);
-  //     } catch (error) {
-  //       console.log("Error fetching data", error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   }
-
-  //   fetchInitialLockState();
-  // }, []);
+  useEffect(() => {
+    console.log("temporary placeholder for getting inital state of lock");
+  }, []);
 
   async function toggleLock() {
     try {
@@ -47,7 +34,14 @@ export default function HomePage({ user }: Home) {
       const data = await toggleLockAPI();
       console.log(isLoading);
 
-      setIsLocked(data.success);
+      if (data.success) {
+        setIsLocked(data.success);
+        await createNewActivity(user._id, "app", true);
+        console.log("SUCCESSFUL");
+      } else {
+        await createNewActivity(user._id, "app", false);
+        console.log("UNSUCCESSFUL");
+      }
     } catch (error) {
       console.error("Error toggling lock:", error);
     } finally {
