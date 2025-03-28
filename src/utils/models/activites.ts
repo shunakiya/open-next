@@ -7,6 +7,7 @@ export interface Activity {
   _id?: ObjectId;
   timestamp: Date;
   isSuccessful: boolean;
+  isLocked: boolean;
   type: "app" | "fingerprint" | "nfc";
 }
 
@@ -14,7 +15,8 @@ export interface Activity {
 export async function createNewActivity(
   userId: string,
   type: Activity["type"],
-  isSuccessful: boolean
+  isSuccessful: boolean,
+  isLocked: boolean
 ) {
   try {
     const activitiesCollection = await getCollection("activities");
@@ -35,6 +37,7 @@ export async function createNewActivity(
     const activity: Activity = {
       timestamp: new Date(),
       isSuccessful,
+      isLocked,
       type,
     };
 
@@ -57,8 +60,19 @@ export async function createNewActivity(
 
 export async function getActivityList(userId: string) {
   try {
-    console.log(userId);
+    const activitiesCollection = await getCollection("activities");
+
+    if (!activitiesCollection) {
+      console.log("Failed to access activites collection.");
+      return [];
+    }
+
+    return await activitiesCollection
+      .find({ userId: new ObjectId(userId) })
+      .sort({ timestamp: -1 })
+      .toArray();
   } catch (error) {
     console.log("Error fetching activities:", error);
+    return [];
   }
 }

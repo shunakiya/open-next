@@ -8,8 +8,9 @@ import { BsGear } from "react-icons/bs";
 import { FaRegClock } from "react-icons/fa6";
 import Link from "next/link";
 import { toggleLockAPI } from "@/utils/flaskapi";
-import { useEffect, useState } from "react";
-import { createNewActivity } from "@/utils/models/activites";
+import { SetStateAction, useEffect, useState } from "react";
+import { createNewActivity, getActivityList } from "@/utils/models/activites";
+import { Document, WithId } from "mongodb";
 
 interface UserData {
   _id: string;
@@ -23,28 +24,44 @@ interface Home {
 export default function HomePage({ user }: Home) {
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [initialData, setInitialData] = useState<WithId<Document>[]>([]);
 
   useEffect(() => {
-    console.log("temporary placeholder for getting inital state of lock");
-  }, []);
+    async function getInitialData() {
+      try {
+        console.log("getting initial data");
+
+        const response = await getActivityList(user._id);
+        setInitialData(response);
+
+        // Log the data after setting the state
+        console.log("fetched initial data:", initialData);
+      } catch (error) {
+        console.log("Failed to fetch initial user data:", error);
+      }
+    }
+
+    getInitialData();
+  }, [user._id]);
 
   async function toggleLock() {
     try {
       setIsLoading(true);
+
+      // THIS IS TEMPORARY REMOVE IT LATER (RPI NOT CONNECTED)
       console.log("creating new activity...");
-      await createNewActivity(user._id, "app", true);
+      await createNewActivity(user._id, "app", false, false);
+      console.log("finished creating new activity");
+      ///////////////////////////////////////////////////
 
       const data = await toggleLockAPI();
       console.log(isLoading);
 
-      if (data.success) {
-        setIsLocked(data.success);
-        await createNewActivity(user._id, "app", true);
-        console.log("SUCCESSFUL");
-      } else {
-        await createNewActivity(user._id, "app", false);
-        console.log("UNSUCCESSFUL");
-      }
+      // set the lock status to whatever is fetched back
+      setIsLocked(data.success);
+
+      // create a new activity and set the status to isSuccessful
+      await createNewActivity(user._id, "app", data.success, data.success);
     } catch (error) {
       console.error("Error toggling lock:", error);
     } finally {
