@@ -49,26 +49,22 @@ export default function HomePage({ user }: Home) {
     getInitialData();
   }, [user._id]);
 
-  // temporary useEffect to see initalData
-  useEffect(() => {
-    console.log("initialData updated:", initialData);
-  }, [initialData]);
-
   async function toggleLock() {
     try {
       setIsLoading(true);
 
       // THIS IS TEMPORARY REMOVE IT LATER (RPI NOT CONNECTED)
-      console.log("creating new activity...");
-      await createNewActivity(user._id, "app", true, false);
-      console.log("finished creating new activity");
+      // console.log("creating new activity...");
+      // await createNewActivity(user._id, "app", false, false);
+      // console.log("finished creating new activity");
       ///////////////////////////////////////////////////
 
       const data = await toggleLockAPI();
-      console.log(isLoading);
+      console.log("loading:", isLoading);
 
       // set the lock status to whatever is fetched back
       setIsLocked(data.success);
+      console.log("set success to:", data.success);
 
       // create a new activity and set the status to isSuccessful
       await createNewActivity(user._id, "app", data.success, data.success);
@@ -118,6 +114,7 @@ export default function HomePage({ user }: Home) {
           <h3 className="text-lg font-semibold text-gray-800 mb-3 mt-6">
             Quick Actions
           </h3>
+
           <div className="grid grid-cols-2 gap-3">
             {/* lock/unlock button */}
             {isLocked ? (
@@ -155,10 +152,11 @@ export default function HomePage({ user }: Home) {
             Recent Activity
           </h3>
 
+          {/* recent activity cards */}
           <div className="space-y-4">
             {initialData.length > 0 && initialData[0].activities ? (
               initialData[0].activities
-                .slice(0, 5)
+                .slice(-3)
                 .reverse()
                 .map((activity: Activity, index: number) => {
                   const activityDate = new Date(activity.timestamp);
