@@ -35,7 +35,7 @@ export default function HomePage({ user }: Home) {
         setInitialData(response);
 
         // Log the data after setting the state
-        console.log("fetched initial data:", initialData);
+        console.log("fetched initial data:", response);
       } catch (error) {
         console.log("Failed to fetch initial user data:", error);
       }

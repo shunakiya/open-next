@@ -67,10 +67,12 @@ export async function getActivityList(userId: string) {
       return [];
     }
 
-    return await activitiesCollection
+    const results = await activitiesCollection
       .find({ userId: new ObjectId(userId) })
       .sort({ timestamp: -1 })
       .toArray();
+
+    return JSON.parse(JSON.stringify(results));
   } catch (error) {
     console.log("Error fetching activities:", error);
     return [];
