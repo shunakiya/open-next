@@ -8,7 +8,7 @@ import { BsGear } from "react-icons/bs";
 import { FaRegClock } from "react-icons/fa6";
 import Link from "next/link";
 import { toggleLockAPI } from "@/utils/flaskapi";
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { createNewActivity, getActivityList } from "@/utils/models/activites";
 import { Document, WithId } from "mongodb";
 
@@ -19,6 +19,14 @@ interface UserData {
 
 interface Home {
   user: UserData;
+}
+
+interface Activity {
+  _id?: string;
+  timestamp: Date | string;
+  isSuccessful: boolean;
+  isLocked: boolean;
+  type: "app" | "fingerprint" | "nfc";
 }
 
 export default function HomePage({ user }: Home) {
@@ -33,9 +41,6 @@ export default function HomePage({ user }: Home) {
 
         const response = await getActivityList(user._id);
         setInitialData(response);
-
-        // Log the data after setting the state
-        console.log("fetched initial data:", response);
       } catch (error) {
         console.log("Failed to fetch initial user data:", error);
       }
@@ -44,13 +49,18 @@ export default function HomePage({ user }: Home) {
     getInitialData();
   }, [user._id]);
 
+  // temporary useEffect to see initalData
+  useEffect(() => {
+    console.log("initialData updated:", initialData);
+  }, [initialData]);
+
   async function toggleLock() {
     try {
       setIsLoading(true);
 
       // THIS IS TEMPORARY REMOVE IT LATER (RPI NOT CONNECTED)
       console.log("creating new activity...");
-      await createNewActivity(user._id, "app", false, false);
+      await createNewActivity(user._id, "app", true, false);
       console.log("finished creating new activity");
       ///////////////////////////////////////////////////
 
@@ -146,49 +156,85 @@ export default function HomePage({ user }: Home) {
           </h3>
 
           <div className="space-y-4">
-            <div className="p-4 bg-gray-50 rounded-xl shadow-sm">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h4 className="font-medium text-gray-800">Card Unlock</h4>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Today at 12:12 PM
-                  </p>
-                </div>
-                <p className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
-                  Success
-                </p>
-              </div>
-            </div>
+            {initialData.length > 0 && initialData[0].activities ? (
+              initialData[0].activities
+                .slice(0, 5)
+                .reverse()
+                .map((activity: Activity, index: number) => {
+                  const activityDate = new Date(activity.timestamp);
 
-            <div className="p-4 bg-gray-50 rounded-xl shadow-sm">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h4 className="font-medium text-gray-800">
-                    Fingerprint Unlock
-                  </h4>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Yesterday at 6:49 PM
-                  </p>
-                </div>
-                <p className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
-                  Success
-                </p>
-              </div>
-            </div>
+                  const isToday =
+                    new Date().toDateString() === activityDate.toDateString();
 
-            <div className="p-4 bg-gray-50 rounded-xl shadow-sm">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h4 className="font-medium text-gray-800">Tag Unlock</h4>
-                  <p className="text-xs text-gray-500 mt-1">
-                    2 Days Ago at 4:15 PM
-                  </p>
-                </div>
-                <p className="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">
-                  Unsuccessful
-                </p>
+                  const isYesterday =
+                    new Date(Date.now() - 86400000).toDateString() ===
+                    activityDate.toDateString();
+
+                  let timeDisplay;
+
+                  if (isToday) {
+                    timeDisplay = `Today at ${activityDate.toLocaleTimeString(
+                      [],
+                      { hour: "2-digit", minute: "2-digit" }
+                    )}`;
+                  } else if (isYesterday) {
+                    timeDisplay = `Yesterday at ${activityDate.toLocaleTimeString(
+                      [],
+                      { hour: "2-digit", minute: "2-digit" }
+                    )}`;
+                  } else {
+                    timeDisplay = `${activityDate.toLocaleDateString()} at ${activityDate.toLocaleTimeString(
+                      [],
+                      { hour: "2-digit", minute: "2-digit" }
+                    )}`;
+                  }
+
+                  let activityTypeText;
+
+                  switch (activity.type) {
+                    case "app":
+                      activityTypeText = "App Unlock";
+                      break;
+                    case "fingerprint":
+                      activityTypeText = "Fingerprint Unlock";
+                      break;
+                    case "nfc":
+                      activityTypeText = "Card Unlock";
+                      break;
+                  }
+
+                  return (
+                    <div
+                      key={index}
+                      className="p-4 bg-gray-50 rounded-xl shadow-sm"
+                    >
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h4 className="font-medium text-gray-800">
+                            {activityTypeText}
+                          </h4>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {timeDisplay}
+                          </p>
+                        </div>
+                        <p
+                          className={`px-2 py-1 ${
+                            activity.isSuccessful
+                              ? "bg-green-100 text-green-800"
+                              : "bg-red-100 text-red-800"
+                          } text-xs rounded-full`}
+                        >
+                          {activity.isSuccessful ? "Success" : "Unsuccessful"}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })
+            ) : (
+              <div className="p-4 bg-gray-50 rounded-xl shadow-sm">
+                <p className="text-center text-gray-500">No recent activity</p>
               </div>
-            </div>
+            )}
           </div>
         </div>
 
