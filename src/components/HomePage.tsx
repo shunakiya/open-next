@@ -64,10 +64,13 @@ export default function HomePage({ user }: Home) {
 
       // set the lock status to whatever is fetched back
       setIsLocked(data.success);
-      console.log("set success to:", data.success);
 
       // create a new activity and set the status to isSuccessful
       await createNewActivity(user._id, "app", data.success, data.success);
+
+      // re-fetch newly updated data
+      const updatedActivities = await getActivityList(user._id);
+      setInitialData(updatedActivities);
     } catch (error) {
       console.error("Error toggling lock:", error);
     } finally {
@@ -149,7 +152,7 @@ export default function HomePage({ user }: Home) {
           </div>
 
           <h3 className="text-lg font-semibold text-gray-800 mb-3 mt-8">
-            Recent Activity
+            Recent Activities
           </h3>
 
           {/* recent activity cards */}
