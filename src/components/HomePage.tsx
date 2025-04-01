@@ -60,10 +60,12 @@ export default function HomePage({ user }: Home) {
       ///////////////////////////////////////////////////
 
       const data = await toggleLockAPI();
-      console.log("loading:", isLoading);
+
+      console.log("lock state:", data);
 
       // set the lock status to whatever is fetched back
-      setIsLocked(data.success);
+      let relay_state = data.relay_state;
+      setIsLocked(!relay_state);
 
       // create a new activity and set the status to isSuccessful
       await createNewActivity(user._id, "app", data.success, data.success);
@@ -176,17 +178,17 @@ export default function HomePage({ user }: Home) {
                   if (isToday) {
                     timeDisplay = `Today at ${activityDate.toLocaleTimeString(
                       [],
-                      { hour: "2-digit", minute: "2-digit" }
+                      { hour: "numeric", minute: "2-digit" }
                     )}`;
                   } else if (isYesterday) {
                     timeDisplay = `Yesterday at ${activityDate.toLocaleTimeString(
                       [],
-                      { hour: "2-digit", minute: "2-digit" }
+                      { hour: "numeric", minute: "2-digit" }
                     )}`;
                   } else {
                     timeDisplay = `${activityDate.toLocaleDateString()} at ${activityDate.toLocaleTimeString(
                       [],
-                      { hour: "2-digit", minute: "2-digit" }
+                      { hour: "numeric", minute: "2-digit" }
                     )}`;
                   }
 
