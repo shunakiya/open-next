@@ -1,4 +1,4 @@
-import ActivityPage from "@/components/ActivityPage";
+import ActivitiesPage from "@/components/ActivitiesPage";
 import getUserAuth from "@/utils/auth/getUserAuth";
 import { redirect } from "next/navigation";
 import { getCollection } from "@/utils/db";
@@ -35,7 +35,7 @@ export default async function Settings() {
 
   return (
     <div>
-      <ActivityPage user={userData} />
+      <ActivitiesPage user={userData} />
     </div>
   );
 }

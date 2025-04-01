@@ -1,23 +1,20 @@
 "use client";
 
+import { getActivityList } from "@/utils/models/activites";
+import { Document, WithId } from "mongodb";
 import Image from "next/image";
-import { CiLock } from "react-icons/ci";
-import { IoFingerPrintOutline } from "react-icons/io5";
-import { GrHomeRounded } from "react-icons/gr";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { BsGear } from "react-icons/bs";
 import { FaRegClock } from "react-icons/fa6";
-import Link from "next/link";
-import { toggleLockAPI } from "@/utils/flaskapi";
-import { useEffect, useState } from "react";
-import { createNewActivity, getActivityList } from "@/utils/models/activites";
-import { Document, WithId } from "mongodb";
+import { GrHomeRounded } from "react-icons/gr";
 
 interface UserData {
   _id: string;
   username: string;
 }
 
-interface Home {
+interface Activities {
   user: UserData;
 }
 
@@ -29,9 +26,7 @@ interface Activity {
   type: "app" | "fingerprint" | "nfc";
 }
 
-export default function HomePage({ user }: Home) {
-  const [isLocked, setIsLocked] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+export default function ActivitiesPage({ user }: Activities) {
   const [initialData, setInitialData] = useState<WithId<Document>[]>([]);
 
   useEffect(() => {
@@ -48,37 +43,6 @@ export default function HomePage({ user }: Home) {
 
     getInitialData();
   }, [user._id]);
-
-  async function toggleLock() {
-    try {
-      setIsLoading(true);
-
-      // THIS IS TEMPORARY REMOVE IT LATER (RPI NOT CONNECTED)
-      // console.log("creating new activity...");
-      // await createNewActivity(user._id, "app", false, false);
-      // console.log("finished creating new activity");
-      ///////////////////////////////////////////////////
-
-      const data = await toggleLockAPI();
-
-      console.log("lock state:", data);
-
-      // set the lock status to whatever is fetched back
-      let relay_state = data.relay_state;
-      setIsLocked(!relay_state);
-
-      // create a new activity and set the status to isSuccessful
-      await createNewActivity(user._id, "app", data.success, data.success);
-
-      // re-fetch newly updated data
-      const updatedActivities = await getActivityList(user._id);
-      setInitialData(updatedActivities);
-    } catch (error) {
-      console.error("Error toggling lock:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 py-1">
@@ -99,7 +63,7 @@ export default function HomePage({ user }: Home) {
             <div className="relative z-10">
               <div className="flex justify-between items-center mb-6">
                 <h1 className="text-white/90 text-xl font-notoserifdisplay">
-                  Home
+                  Activities
                 </h1>
               </div>
 
@@ -120,48 +84,11 @@ export default function HomePage({ user }: Home) {
             Quick Actions
           </h3>
 
-          <div className="grid grid-cols-2 gap-3">
-            {/* lock/unlock button */}
-            {isLocked ? (
-              <button
-                onClick={toggleLock}
-                className="flex flex-col shadow-md items-center justify-center p-8 bg-red-50 rounded-xl hover:bg-red-100 transition-colors"
-              >
-                <div className="w-18 h-18 rounded-full bg-red-300 flex items-center justify-center mb-2.5">
-                  <CiLock size={40} />
-                </div>
-                <p className="font-medium text-gray-700">Locked</p>
-              </button>
-            ) : (
-              <button
-                onClick={toggleLock}
-                className="flex flex-col shadow-md items-center justify-center p-8 bg-green-50 rounded-xl hover:bg-green-100 transition-colors"
-              >
-                <div className="w-18 h-18 rounded-full bg-green-300 flex items-center justify-center mb-2.5">
-                  <CiLock size={40} />
-                </div>
-                <p className="font-medium text-gray-700">Unlocked</p>
-              </button>
-            )}
-
-            {/* fingeprint access settings */}
-            <button className="flex flex-col shadow-md items-center justify-center p-8 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors">
-              <div className="w-18 h-18 rounded-full bg-blue-300 flex items-center justify-center mb-2.5">
-                <IoFingerPrintOutline size={40} />
-              </div>
-              <p className="font-medium text-gray-700">Fingerprints</p>
-            </button>
-          </div>
-
-          <h3 className="text-lg font-semibold text-gray-800 mb-3 mt-8">
-            Recent Activities
-          </h3>
-
           {/* recent activity cards */}
           <div className="space-y-4">
             {initialData.length > 0 && initialData[0].activities ? (
               initialData[0].activities
-                .slice(-3)
+                .slice(-6)
                 .reverse()
                 .map((activity: Activity, index: number) => {
                   const activityDate = new Date(activity.timestamp);
@@ -244,7 +171,7 @@ export default function HomePage({ user }: Home) {
         <div className="flex justify-around items-center px-6 py-5 border-t border-gray-100">
           <Link
             href="/home"
-            className="flex flex-col items-center text-[#703BE7]"
+            className="flex flex-col items-center text-gray-400 hover:text-[#703BE7] transition-colors"
           >
             <GrHomeRounded className="w-4 h-4 mb-1.5" />
             <p className="text-xs font-medium">Home</p>
@@ -252,14 +179,14 @@ export default function HomePage({ user }: Home) {
 
           <Link
             href="/activity"
-            className="flex flex-col items-center text-gray-400 hover:text-[#703BE7] transition-colors"
+            className="flex flex-col items-center text-[#703BE7]"
           >
             <FaRegClock className="w-4 h-4 mb-1.5" />
             <p className="text-xs font-medium">Activity</p>
           </Link>
 
           <Link
-            href="settings"
+            href="/settings"
             className="flex flex-col items-center text-gray-400 hover:text-[#703BE7] transition-colors"
           >
             <BsGear className="w-4 h-4 mb-1.5" />
