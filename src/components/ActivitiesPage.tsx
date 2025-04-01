@@ -88,7 +88,7 @@ export default function ActivitiesPage({ user }: Activities) {
           <div className="space-y-4">
             {initialData.length > 0 && initialData[0].activities ? (
               initialData[0].activities
-                .slice(-6)
+                .slice(-5)
                 .reverse()
                 .map((activity: Activity, index: number) => {
                   const activityDate = new Date(activity.timestamp);

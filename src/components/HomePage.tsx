@@ -53,6 +53,8 @@ export default function HomePage({ user }: Home) {
     try {
       setIsLoading(true);
 
+      console.log("isLoading:", isLoading);
+
       // THIS IS TEMPORARY REMOVE IT LATER (RPI NOT CONNECTED)
       // console.log("creating new activity...");
       // await createNewActivity(user._id, "app", false, false);
@@ -64,7 +66,7 @@ export default function HomePage({ user }: Home) {
       console.log("lock state:", data);
 
       // set the lock status to whatever is fetched back
-      let relay_state = data.relay_state;
+      const relay_state = data.relay_state;
       setIsLocked(!relay_state);
 
       // create a new activity and set the status to isSuccessful
