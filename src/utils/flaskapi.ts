@@ -16,6 +16,6 @@ export async function toggleLockAPI() {
     return data;
   } catch (error) {
     console.log("Error fetching data:", error);
-    throw error;
+    return -1;
   }
 }

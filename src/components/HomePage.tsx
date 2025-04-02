@@ -30,7 +30,7 @@ interface Activity {
 }
 
 export default function HomePage({ user }: Home) {
-  const [isLocked, setIsLocked] = useState<boolean>(false);
+  const [isLocked, setIsLocked] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [initialData, setInitialData] = useState<WithId<Document>[]>([]);
 
@@ -63,14 +63,18 @@ export default function HomePage({ user }: Home) {
 
       const data = await toggleLockAPI();
 
-      console.log("lock state:", data);
+      if (data === -1) {
+        console.log("Could not connect to RPI.");
+        await createNewActivity(user._id, "app", false, false);
+      } else {
+        // set the lock status to whatever is fetched back
+        const relay_state = data.relay_state;
+        setIsLocked(relay_state);
 
-      // set the lock status to whatever is fetched back
-      const relay_state = data.relay_state;
-      setIsLocked(!relay_state);
-
-      // create a new activity and set the status to isSuccessful
-      await createNewActivity(user._id, "app", data.success, data.success);
+        // create a new activity and set the status to isSuccessful
+        console.log("created new activity");
+        await createNewActivity(user._id, "app", data.success, data.success);
+      }
 
       // re-fetch newly updated data
       const updatedActivities = await getActivityList(user._id);
