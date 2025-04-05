@@ -11,6 +11,7 @@ import { toggleLockAPI } from "@/utils/flaskapi";
 import { useEffect, useState } from "react";
 import { createNewActivity, getActivityList } from "@/utils/models/activites";
 import { Document, WithId } from "mongodb";
+import { getPerplexityPrediction } from "@/utils/perplexityapi";
 
 interface UserData {
   _id: string;
@@ -47,6 +48,8 @@ export default function HomePage({ user }: Home) {
     }
 
     getInitialData();
+
+    getPerplexityPrediction();
   }, [user._id]);
 
   async function toggleLock() {
