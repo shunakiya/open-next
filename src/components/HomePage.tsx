@@ -47,9 +47,23 @@ export default function HomePage({ user }: Home) {
       }
     }
 
+    async function fetchPerplexity() {
+      try {
+        const result = await getPerplexityPrediction(
+          "what is my annual salary if i get paid $60/hr?"
+        );
+
+        console.log(result);
+
+        return result;
+      } catch (error) {
+        console.log("Failed to fetch data from perplexity:", error);
+      }
+    }
+
     getInitialData();
 
-    getPerplexityPrediction();
+    console.log(fetchPerplexity());
   }, [user._id]);
 
   async function toggleLock() {
