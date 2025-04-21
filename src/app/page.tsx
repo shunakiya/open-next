@@ -103,8 +103,8 @@ export default function Login() {
 
   return (
     <div className="flex h-screen">
-      <div className="relative h-full w-1/2 p-2">
-        <div className="relative h-full w-full rounded-2xl overflow-hidden">
+      <div className="hidden md:block relative h-full w-1/2 p-2">
+        <div className="relative h-full w-full rounded-2xl overflow-hidden ">
           {/* current image */}
           <Image
             key={`active-${activeImage}`}
@@ -165,7 +165,7 @@ export default function Login() {
         </div>
       </div>
 
-      <div className="relative z-10 flex items-center mx-auto ">
+      <div className="relative z-10 flex items-center mx-auto my-16 md:my-0">
         <div className="flex flex-col gap-7 w-[409px] px-5 py-10">
           <div className="absolute top-6 right-7 left-7 text-center">
             <div className="flex gap-2 items-center justify-center">
