@@ -9,7 +9,7 @@ interface UserDocument extends Document {
   username: string;
 }
 
-export default async function Settings() {
+export default async function Home() {
   const authUser = await getUserAuth();
 
   if (!authUser) {
@@ -33,9 +33,14 @@ export default async function Settings() {
     redirect("/");
   }
 
+  const converetedUserData = {
+    _id: userData._id.toString(),
+    username: userData.username,
+  };
+
   return (
     <div>
-      <ActivitiesPage user={userData} />
+      <ActivitiesPage user={converetedUserData} />
     </div>
   );
 }
