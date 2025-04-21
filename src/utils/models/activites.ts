@@ -44,7 +44,7 @@ export async function createNewActivity(
     if (existingUserActivities) {
       return await activitiesCollection.updateOne(
         { userId: userObjectId },
-        { $push: { activities: activity as any } }
+        { $push: { activities: activity } as unknown as Record<string, any> }
       );
     } else {
       return await activitiesCollection.insertOne({
