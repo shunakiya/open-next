@@ -44,7 +44,8 @@ export async function createNewActivity(
     if (existingUserActivities) {
       return await activitiesCollection.updateOne(
         { userId: userObjectId },
-        { $push: { activities: activity } as unknown as Record<string, any> }
+        // @ts-expect-error MongoDB typing issue
+        { $push: { activities: activity } }
       );
     } else {
       return await activitiesCollection.insertOne({
