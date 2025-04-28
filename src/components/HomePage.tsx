@@ -76,6 +76,7 @@ export default function HomePage({ user }: Home) {
       // console.log("creating new activity...");
       // await createNewActivity(user._id, "app", false, false);
       // console.log("finished creating new activity");
+
       ///////////////////////////////////////////////////
 
       const data = await toggleLockAPI();

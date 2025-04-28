@@ -3,6 +3,9 @@ const API_URL = `http://192.168.137.196:5000`;
 export async function toggleLockAPI() {
   try {
     console.log("sending togglelock to rpi");
+
+    const startTime = performance.now();
+
     const response = await fetch(`${API_URL}/togglelock`, {
       method: "GET",
     });
@@ -12,6 +15,11 @@ export async function toggleLockAPI() {
     }
 
     const data = await response.json();
+
+    const endTime = performance.now();
+    const latency = endTime - startTime;
+
+    console.log(`Request completed in ${latency.toFixed(2)}ms`);
 
     return data;
   } catch (error) {

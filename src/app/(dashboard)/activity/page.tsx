@@ -9,7 +9,7 @@ interface UserDocument extends Document {
   username: string;
 }
 
-export default async function Home() {
+export default async function Activity() {
   const authUser = await getUserAuth();
 
   if (!authUser) {
